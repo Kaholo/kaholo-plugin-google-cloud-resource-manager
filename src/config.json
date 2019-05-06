@@ -34,21 +34,6 @@
       ]
     },
     {
-      "name": "listProjectsIDs",
-      "viewName": "List project IDs",
-      "params": [
-        {"name": "FILTER",
-          "viewName": "Filter",
-          "type": "string"
-        },
-        {
-          "name": "KEYFILE",
-          "viewName": "Path to key",
-          "type": "string"
-        }
-      ]
-    },
-    {
       "name": "listProjects",
       "viewName": "List projects",
       "params": [

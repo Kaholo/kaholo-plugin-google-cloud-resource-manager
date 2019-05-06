@@ -35,35 +35,15 @@ function deleteProjects(action) {
             project.delete(function (err, apiResponse) {
                 if (err)
                     return reject(err);
-                resolve(apiResponse)
+                resolve(apiResponse, {success: true})
+                //apiResponce is empty if success
             })
         }
     })
 }
-//apiResponce is empty if success
 
 
 
-function listProjectsIDs(action) {
-    return new Promise((resolve, reject) => {
-        let resource = new Resource({
-            keyFilename: action.params.KEYFILE
-        });
-        let cmdOut = [];
-        let filtering = '';
-        if (action.params.FILTER) {
-            filtering += action.params.FILTER;
-        }
-        resource.getProjects(filtering, function (err, operations) {
-            if (err)
-                return reject(err);
-            operations.forEach(project => {
-                cmdOut.push(project.id)
-            });
-            resolve(cmdOut)
-        })
-    })
-}
 
 function listProjects(action) {
     return new Promise((resolve, reject) => {
@@ -86,6 +66,5 @@ function listProjects(action) {
 module.exports= {
     createProjects: createProjects,
     deleteProjects: deleteProjects,
-    listProjectsIDs: listProjectsIDs,
     listProjects: listProjects
 }
