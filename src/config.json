@@ -1,0 +1,67 @@
+{
+  "name": "GCP Resource",
+  "type": "executer",
+  "execProgram": "node",
+  "main": "app.js",
+  "imgUrl": "logo.png",
+  "version": "0.0.1",
+  "description": "GCP Resource",
+  "methods": [
+    {
+      "name": "createProjects",
+      "viewName": "Create new projects",
+      "params": [
+        {
+          "name": "PROJECTIDS",
+          "viewName": "Project name/names",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "deleteProjects",
+      "viewName": "Delete project/projects",
+      "params": [
+        {"name": "KEYFILE",
+          "viewName": "Path to key",
+          "type": "string"
+        },
+        {
+          "name": "PROJECTIDS",
+          "viewName": "Project name/names",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "listProjectsIDs",
+      "viewName": "List project IDs",
+      "params": [
+        {"name": "FILTER",
+          "viewName": "Filter",
+          "type": "string"
+        },
+        {
+          "name": "KEYFILE",
+          "viewName": "Path to key",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "listProjects",
+      "viewName": "List projects",
+      "params": [
+        {"name": "OPTIONS",
+          "viewName": "Options",
+          "type": "string"
+        },
+        {
+          "name": "KEYFILE",
+          "viewName": "Path to key",
+          "type": "string"
+        }
+      ]
+    }
+    ]
+  }
