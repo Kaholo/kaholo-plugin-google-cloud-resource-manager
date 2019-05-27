@@ -15,6 +15,16 @@
           "name": "PROJECTIDS",
           "viewName": "Project name/names",
           "type": "string"
+        },
+        {
+          "name": "LABELKEY",
+          "viewName": "label key",
+          "type": "string"
+        },
+        {
+          "name": "LABELVALUE",
+          "viewName": "label value",
+          "type": "string"
         }
       ]
     },

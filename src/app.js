@@ -9,9 +9,18 @@ function createProjects(action) {
                 projectId: projectIDs,
             }
         );
+        let label;
+        if (action.params.LABELKEY && action.params.LABELVALUE) {
+            let newLabel = {};
+            newLabel[action.params.LABELKEY] = action.params.LABELVALUE;
+            label = {
+                labels: newLabel
+            }
+        }
+
         let projectsArray = projectIDs.split(' ');
         projectsArray.forEach(result => {
-            resource.createProject(result, function(err, project, operation, apiResponse) {
+            resource.createProject(result, label, function(err, project, operation, apiResponse) {
                 if (err)
                     return reject(err);
                 resolve(apiResponse)
