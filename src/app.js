@@ -1,63 +1,100 @@
 const {Resource} = require('@google-cloud/resource');
 
+function _getCredentials(action,settings){
+    let keysParam = action.params.CREDENTIALS || settings.CREDENTIALS
+    let keys;
 
-function createProjects(action) {
+    if (typeof keysParam != 'string'){
+        keys = keysParam;
+    } else {
+        try{
+            keys = JSON.parse(keysParam)
+        }catch(err){
+            throw new Error("Invalid credentials JSON");
+        }
+    }
+
+    return keys;
+}
+
+function createProjects(action, settings) {
     return new Promise((resolve, reject) => {
-        let projectIDs = action.params.PROJECTIDS;
-        let resource = new Resource(
-            {
-                projectId: projectIDs,
-            }
-        );
-        let label;
-        if (action.params.LABELKEY && action.params.LABELVALUE) {
-            let newLabel = {};
-            newLabel[action.params.LABELKEY] = action.params.LABELVALUE;
-            label = {
-                labels: newLabel
-            }
+        let credentials = _getCredentials(action,settings);
+        let options = {
+            parent : {type: 'organization', id: action.params.organizationId}
+        };
+
+        if (action.params.LABELS) {
+            options.labels = action.params.LABELS;
         }
 
-        let projectsArray = projectIDs.split(' ');
-        projectsArray.forEach(result => {
-            resource.createProject(result, label, function(err, project, operation, apiResponse) {
-                if (err)
-                    return reject(err);
-                resolve(apiResponse)
+        let projectsArray = _handleParam(action.params.PROJECTIDS);
+        if(typeof projectsArray == 'string')
+            projectsArray = [projectsArray];
+        
+        Promise.all(projectsArray.map(pId=>{ 
+            return new Promise((resolveInner, rejectInner)=>{
+                
+                let resource = new Resource(
+                    {
+                        credentials
+                    }
+                );
+
+                resource.createProject(pId, options, function(err, project, operation, apiResponse) {
+                    if (err)
+                        return rejectInner(err);
+                    resolveInner(apiResponse)
+                })
             })
-        })
+        })).then(resolve).catch(reject);
     })
 }
 //requires logged into sdk:
 // gcloud auth application-default login
-
-
-function deleteProjects(action) {
-    return new Promise((resolve, reject) => {
-        let resource = new Resource({
-            keyFilename: action.params.KEYFILE
-        });
-        let projectID = action.params.PROJECTIDS;
-        let projectsArray = projectID.split(' ');
-        for (i = 0; i < projectsArray.length; i++) {
-            let project = resource.project(projectsArray[i]);
-            project.delete(function (err, apiResponse) {
-                if (err)
-                    return reject(err);
-                resolve(apiResponse, {success: true})
-                //apiResponce is empty if success
-            })
+function _handleParam(param){
+    if (typeof param == 'string')
+    {
+        try{
+            return JSON.parse(param)
+        } catch (err){
+            return param;
         }
+    }
+    return param
+}
+
+function deleteProjects(action, settings) {
+    return new Promise((resolve, reject) => {
+        let credentials = _getCredentials(action,settings);
+        let projectsArray = _handleParam(action.params.PROJECTIDS);
+        if(typeof projectsArray == 'string')
+            projectsArray = [projectsArray];
+        
+        Promise.all(projectsArray.map(pId=>{
+            let resource = new Resource({
+                credentials
+            });
+            let project = resource.project(pId);
+            return new Promise((resolveInner, rejectInner)=>{
+                project.delete(function (err, apiResponse) {
+                    if (err)
+                        return rejectInner(err);
+                    resolveInner(apiResponse, {success: true})
+                })
+            })    
+        })).then(resolve).catch(reject);
     })
 }
 
 
 
 
-function listProjects(action) {
+function listProjects(action, settings) {
     return new Promise((resolve, reject) => {
+        let credentials = _getCredentials(action,settings);
         let resource = new Resource({
-            keyFilename: action.params.KEYFILE
+            credentials
         });
         let options = action.params.OPTIONS;
         let cmdOut = [];

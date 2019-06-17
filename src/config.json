@@ -4,26 +4,38 @@
   "execProgram": "node",
   "main": "app.js",
   "imgUrl": "logo.png",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "GCP Resource",
+  "settings": [
+    {
+      "name": "CREDENTIALS",
+      "viewName": "Credentials",
+      "type": "vault"
+    }
+  ],
   "methods": [
     {
       "name": "createProjects",
       "viewName": "Create new projects",
       "params": [
         {
+          "name": "CREDENTIALS",
+          "viewName": "Credentials",
+          "type": "vault"
+        },
+        {
           "name": "PROJECTIDS",
           "viewName": "Project name/names",
           "type": "string"
         },
         {
-          "name": "LABELKEY",
-          "viewName": "label key",
+          "name": "organizationId",
+          "viewName": "Organization Id",
           "type": "string"
         },
         {
-          "name": "LABELVALUE",
-          "viewName": "label value",
+          "name": "LABELS",
+          "viewName": "labels object",
           "type": "string"
         }
       ]
@@ -32,9 +44,10 @@
       "name": "deleteProjects",
       "viewName": "Delete project/projects",
       "params": [
-        {"name": "KEYFILE",
-          "viewName": "Path to key",
-          "type": "string"
+        {
+          "name": "CREDENTIALS",
+          "viewName": "Credentials",
+          "type": "vault"
         },
         {
           "name": "PROJECTIDS",
@@ -47,13 +60,14 @@
       "name": "listProjects",
       "viewName": "List projects",
       "params": [
-        {"name": "OPTIONS",
-          "viewName": "Options",
-          "type": "string"
+        {
+          "name": "CREDENTIALS",
+          "viewName": "Credentials",
+          "type": "vault"
         },
         {
-          "name": "KEYFILE",
-          "viewName": "Path to key",
+          "name": "OPTIONS",
+          "viewName": "Options",
           "type": "string"
         }
       ]
