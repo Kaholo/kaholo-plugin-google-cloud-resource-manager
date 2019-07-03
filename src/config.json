@@ -37,6 +37,11 @@
           "name": "LABELS",
           "viewName": "labels object",
           "type": "string"
+        },
+        {
+          "name": "waitForOperation",
+          "viewName": "Wait for operation end",
+          "type": "boolean"
         }
       ]
     },

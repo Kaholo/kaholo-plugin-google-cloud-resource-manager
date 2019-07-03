@@ -17,6 +17,26 @@ function _getCredentials(action,settings){
     return keys;
 }
 
+function _handleOPeration(operation){
+    return new Promise((resolve,reject)=>{
+        try {
+            operation
+                .on('error', function (err) {
+                    reject(err);
+                })
+                .on('running', function (metadata) {
+                    console.log(JSON.stringify(metadata));
+                })
+                .on('complete', function (metadata) {
+                    console.log("Virtual machine created!");
+                    resolve(metadata);
+                });
+        } catch (e) {
+            reject(e);
+        }    
+    })
+}
+
 function createProjects(action, settings) {
     return new Promise((resolve, reject) => {
         let credentials = _getCredentials(action,settings);
@@ -44,7 +64,11 @@ function createProjects(action, settings) {
                 resource.createProject(pId, options, function(err, project, operation, apiResponse) {
                     if (err)
                         return rejectInner(err);
-                    resolveInner(apiResponse)
+
+                    if(!action.params.waitForOperation)
+                        return resolveInner(apiResponse)
+
+                    _handleOPeration(operation).then(resolveInner).catch(rejectInner);
                 })
             })
         })).then(resolve).catch(reject);
