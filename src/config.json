@@ -1,0 +1,117 @@
+{
+  "name": "GCP Resource",
+  "type": "executer",
+  "execProgram": "node",
+  "main": "app.js",
+  "imgUrl": "logo.png",
+  "version": "1.1.0",
+  "description": "GCP Resource",
+  "settings": [
+    {
+      "name": "CREDENTIALS",
+      "viewName": "Credentials",
+      "type": "vault"
+    }
+  ],
+  "methods": [
+    {
+      "name": "createProjects",
+      "viewName": "Create new projects",
+      "params": [
+        {
+          "name": "CREDENTIALS",
+          "viewName": "Credentials",
+          "type": "vault"
+        },
+        {
+          "name": "PROJECTIDS",
+          "viewName": "Project name/names",
+          "type": "string"
+        },
+        {
+          "name": "organizationId",
+          "viewName": "Organization Id",
+          "type": "string"
+        },
+        {
+          "name": "LABELS",
+          "viewName": "labels object",
+          "type": "string"
+        },
+        {
+          "name": "waitForOperation",
+          "viewName": "Wait for operation end",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "updateProject",
+      "viewName": "Update project labels",
+      "params": [
+        {
+          "name": "CREDENTIALS",
+          "viewName": "Credentials",
+          "type": "vault"
+        },
+        {
+          "name": "projectId",
+          "viewName": "Project Id",
+          "type": "string"
+        },
+        {
+          "name": "LABELS",
+          "viewName": "labels object",
+          "type": "string"
+        },
+        {
+          "name": "handlingType",
+          "viewName": "Handling type",
+          "type": "options",
+          "options": [
+            {
+              "id": "overwrite",
+              "name": "Overwrite"
+            },
+            {
+              "id": "merge",
+              "name": "Merge"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "deleteProjects",
+      "viewName": "Delete project/projects",
+      "params": [
+        {
+          "name": "CREDENTIALS",
+          "viewName": "Credentials",
+          "type": "vault"
+        },
+        {
+          "name": "PROJECTIDS",
+          "viewName": "Project name/names",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "listProjects",
+      "viewName": "List projects",
+      "params": [
+        {
+          "name": "CREDENTIALS",
+          "viewName": "Credentials",
+          "type": "vault"
+        },
+        {
+          "name": "OPTIONS",
+          "viewName": "Options",
+          "type": "string"
+        }
+      ]
+    }
+    ]
+  }
