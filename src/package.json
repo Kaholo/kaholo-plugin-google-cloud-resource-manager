@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/resource": "0.9.1"
+    "@google-cloud/resource": "1.1.2",
+    "googleapis": "40.0.1"
   }
 }

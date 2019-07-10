@@ -1,4 +1,6 @@
-const {Resource} = require('@google-cloud/resource');
+const {Resource, Project} = require('@google-cloud/resource');
+const {google} = require('googleapis');
+var cloudResourceManager = google.cloudresourcemanager('v1beta1');
 
 function _getCredentials(action,settings){
     let keysParam = action.params.CREDENTIALS || settings.CREDENTIALS
@@ -111,8 +113,46 @@ function deleteProjects(action, settings) {
     })
 }
 
+function updateProject(action,settings){
+    return new Promise((resolve, reject) => {
+        let credentials = _getCredentials(action,settings);
+        let auth = new google.auth.JWT({
+            email : credentials.client_email,
+            key : credentials.private_key,
+            scopes : ['https://www.googleapis.com/auth/cloud-platform']
+        });
 
+        let req = {
+            auth,
+            projectId: action.params.projectId,
+        }
 
+        cloudResourceManager.projects.get(req,(err,res)=>{
+            if(err) return reject(err);
+            
+            let project = res.data;
+            if (!action.params.LABELS)
+                return resolve(project);
+
+            if(!action.params.handlingType || action.params.handlingType=="overwrite"){
+                project.labels = action.params.LABELS;
+            } else {
+                project.labels = Object.assign(project.labels,action.params.LABELS);
+            }
+
+            let request = {
+                projectId: action.params.projectId,
+                resource: project,
+                auth: auth
+            };
+
+            cloudResourceManager.projects.update(request,(err,res)=>{
+                if (err) return reject(err);
+                resolve(res.data);
+            })
+        })
+    })
+}
 
 function listProjects(action, settings) {
     return new Promise((resolve, reject) => {
@@ -136,5 +176,6 @@ function listProjects(action, settings) {
 module.exports= {
     createProjects: createProjects,
     deleteProjects: deleteProjects,
-    listProjects: listProjects
+    listProjects: listProjects,
+    updateProject : updateProject
 }
