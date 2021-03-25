@@ -10,7 +10,7 @@ Create new Google Cloud project(s) with the name(s) specified.
 ### Parameters
 1. Credentials(vault)**optional** - The Google Cloud credentials of the user to execute this specific time.
 2. Project name(s)(string)**required** - All names/ids of the projects to create. You can enter either an array from code or a text, representing all the names of the projects, each seperated with a new line.
-3. Organization ID(string)**optional** - The ID of the organization your account is associated with and where the project will be created. You can see how to get organization ID in [here](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+3. Organization ID(string)**required** - The ID of the organization your account is associated with and where the project will be created. You can see how to get organization ID in [here](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
 4. Labels Object(object)**optional** - The Labels to assign to the new project(s). Provide it as an object directly from code.
 5. Wait for operation end(boolean)**optional** - Wether to wait until the project(s) is created or not.
 

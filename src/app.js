@@ -4,16 +4,15 @@ var cloudResourceManager = google.cloudresourcemanager('v1beta1');
 
 async function createProjects(action, settings) {
     const creds = _getCredentials(action,settings);
-    let options = {};
-    if (action.params.organizationId){
-        options.parent = {type: 'organization', id: action.params.organizationId}
-    }
+    let options = {
+        parent: {type: 'organization', id: action.params.organizationId}
+    };
     if (action.params.LABELS) {
         options.labels = action.params.LABELS;
     }
 
     const projectsArray = _handleArr(action.params.PROJECTIDS);
-    const resource = new Resource({creds});
+    const resource = new Resource(creds);
 
     return Promise.all(projectsArray.map(pId=>{ 
         return new Promise((resolve, reject)=>{
@@ -31,7 +30,7 @@ async function createProjects(action, settings) {
 async function deleteProjects(action, settings) {
     const creds = _getCredentials(action,settings);
     const projectsArray = _handleArr(action.params.PROJECTIDS);
-    const resource = new Resource({creds});
+    const resource = new Resource(creds);
     return Promise.all(projectsArray.map(pId=>{
         const project = resource.project(pId);
         return new Promise((resolve, reject)=>{
@@ -47,8 +46,8 @@ async function deleteProjects(action, settings) {
 async function updateProject(action,settings){
     const creds = _getCredentials(action,settings);
     const auth = new google.auth.JWT({
-        email : creds.client_email,
-        key : creds.private_key,
+        email : creds.credentials.client_email,
+        key : creds.credentials.private_key,
         scopes : ['https://www.googleapis.com/auth/cloud-platform']
     });
 
@@ -87,7 +86,7 @@ async function updateProject(action,settings){
 
 async function listProjects(action, settings) {
     const creds = _getCredentials(action,settings);
-    const resource = new Resource({creds});
+    const resource = new Resource(creds);
     const [projects] = await resource.getProjects();
     return projects;
 }
@@ -95,20 +94,21 @@ async function listProjects(action, settings) {
 // helpers
 
 function _getCredentials(action,settings){
-    let keysParam = action.params.CREDENTIALS || settings.CREDENTIALS
+    const keysParam = action.params.CREDENTIALS || settings.CREDENTIALS;
     let keys;
-
     if (typeof keysParam != 'string'){
         keys = keysParam;
     } else {
         try{
-            keys = JSON.parse(keysParam)
-        }catch(err){
+            keys = JSON.parse(keysParam);
+        }
+        catch(err){
             throw new Error("Invalid credentials JSON");
         }
     }
-
-    return keys;
+    return {
+        credentials: keys
+    };
 }
 
 function _handleOperation(operation){
