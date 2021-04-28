@@ -4,8 +4,8 @@
   "execProgram": "node",
   "main": "app.js",
   "imgUrl": "logo.png",
-  "version": "1.1.0",
-  "description": "GCP Resource",
+  "version": "1.2.0",
+  "description": "Google Cloud Resource Manager",
   "settings": [
     {
       "name": "CREDENTIALS",
@@ -16,7 +16,7 @@
   "methods": [
     {
       "name": "createProjects",
-      "viewName": "Create new projects",
+      "viewName": "Create New Projects",
       "params": [
         {
           "name": "CREDENTIALS",
@@ -25,17 +25,17 @@
         },
         {
           "name": "PROJECTIDS",
-          "viewName": "Project name/names",
-          "type": "string"
+          "viewName": "Project name(s)",
+          "type": "text"
         },
         {
           "name": "organizationId",
-          "viewName": "Organization Id",
+          "viewName": "Organization ID",
           "type": "string"
         },
         {
           "name": "LABELS",
-          "viewName": "labels object",
+          "viewName": "Labels Object",
           "type": "string"
         },
         {
@@ -47,7 +47,7 @@
     },
     {
       "name": "updateProject",
-      "viewName": "Update project labels",
+      "viewName": "Update Project Labels",
       "params": [
         {
           "name": "CREDENTIALS",
@@ -56,7 +56,7 @@
         },
         {
           "name": "projectId",
-          "viewName": "Project Id",
+          "viewName": "Project ID",
           "type": "string"
         },
         {
@@ -66,7 +66,7 @@
         },
         {
           "name": "handlingType",
-          "viewName": "Handling type",
+          "viewName": "Handling Type",
           "type": "options",
           "options": [
             {
@@ -83,7 +83,7 @@
     },
     {
       "name": "deleteProjects",
-      "viewName": "Delete project/projects",
+      "viewName": "Delete Project(s)",
       "params": [
         {
           "name": "CREDENTIALS",
@@ -92,24 +92,19 @@
         },
         {
           "name": "PROJECTIDS",
-          "viewName": "Project name/names",
-          "type": "string"
+          "viewName": "Project Name(s)",
+          "type": "text"
         }
       ]
     },
     {
       "name": "listProjects",
-      "viewName": "List projects",
+      "viewName": "List Projects",
       "params": [
         {
           "name": "CREDENTIALS",
           "viewName": "Credentials",
           "type": "vault"
-        },
-        {
-          "name": "OPTIONS",
-          "viewName": "Options",
-          "type": "string"
         }
       ]
     }

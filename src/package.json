@@ -1,15 +1,15 @@
 {
   "name": "kaholo-plugin-google-cloud-resource-manager",
-  "version": "0.0.1",
+  "version": "1.2.0",
   "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Kaholo Group",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/resource": "1.1.2",
-    "googleapis": "40.0.1"
+    "@google-cloud/resource": "^1.2.1",
+    "googleapis": "^68.0.0"
   }
 }
