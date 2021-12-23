@@ -4,8 +4,9 @@
   "execProgram": "node",
   "main": "app.js",
   "imgUrl": "logo.png",
-  "version": "1.2.0",
-  "description": "Google Cloud Resource Manager",
+  "version": "1.2.1",
+  "description": "Integration with Google Cloud Resource Manager",
+  "category": "CLOUD",
   "settings": [
     {
       "name": "CREDENTIALS",
