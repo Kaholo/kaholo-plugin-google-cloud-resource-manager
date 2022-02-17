@@ -16,6 +16,19 @@
   ],
   "methods": [
     {
+      "name": "listProjects",
+      "viewName": "List Projects",
+      "params": [
+        {
+          "name": "creds",
+          "viewName": "Credentials",
+          "type": "vault"
+        }
+      ]
+    }
+  ],
+  "brokenmethods": [
+    {
       "name": "createProjects",
       "viewName": "Create New Projects",
       "params": [
@@ -97,17 +110,6 @@
           "type": "text"
         }
       ]
-    },
-    {
-      "name": "listProjects",
-      "viewName": "List Projects",
-      "params": [
-        {
-          "name": "creds",
-          "viewName": "Credentials",
-          "type": "vault"
-        }
-      ]
     }
-    ]
-  }
+  ]
+}
