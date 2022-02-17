@@ -1,31 +1,44 @@
 {
-  "name": "GCP Resource",
+  "name": "Google-Cloud-Resource-Manager",
   "type": "executer",
   "execProgram": "node",
   "main": "app.js",
   "imgUrl": "logo.png",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "Integration with Google Cloud Resource Manager",
   "category": "CLOUD",
   "settings": [
     {
-      "name": "CREDENTIALS",
+      "name": "creds",
       "viewName": "Credentials",
       "type": "vault"
     }
   ],
   "methods": [
     {
+      "name": "listProjects",
+      "viewName": "List Projects",
+      "params": [
+        {
+          "name": "creds",
+          "viewName": "Credentials",
+          "type": "vault"
+        }
+      ]
+    }
+  ],
+  "brokenmethods": [
+    {
       "name": "createProjects",
       "viewName": "Create New Projects",
       "params": [
         {
-          "name": "CREDENTIALS",
+          "name": "creds",
           "viewName": "Credentials",
           "type": "vault"
         },
         {
-          "name": "PROJECTIDS",
+          "name": "projectId",
           "viewName": "Project name(s)",
           "type": "text"
         },
@@ -35,8 +48,8 @@
           "type": "string"
         },
         {
-          "name": "LABELS",
-          "viewName": "Labels Object",
+          "name": "labels",
+          "viewName": "labels Object",
           "type": "string"
         },
         {
@@ -48,10 +61,10 @@
     },
     {
       "name": "updateProject",
-      "viewName": "Update Project Labels",
+      "viewName": "Update Project labels",
       "params": [
         {
-          "name": "CREDENTIALS",
+          "name": "creds",
           "viewName": "Credentials",
           "type": "vault"
         },
@@ -61,7 +74,7 @@
           "type": "string"
         },
         {
-          "name": "LABELS",
+          "name": "labels",
           "viewName": "labels object",
           "type": "string"
         },
@@ -87,27 +100,16 @@
       "viewName": "Delete Project(s)",
       "params": [
         {
-          "name": "CREDENTIALS",
+          "name": "creds",
           "viewName": "Credentials",
           "type": "vault"
         },
         {
-          "name": "PROJECTIDS",
+          "name": "projectId",
           "viewName": "Project Name(s)",
           "type": "text"
         }
       ]
-    },
-    {
-      "name": "listProjects",
-      "viewName": "List Projects",
-      "params": [
-        {
-          "name": "CREDENTIALS",
-          "viewName": "Credentials",
-          "type": "vault"
-        }
-      ]
     }
-    ]
-  }
+  ]
+}
